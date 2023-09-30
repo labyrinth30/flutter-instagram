@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         vertical: 8,
                       ),
                       child: const Text(
-                        "Sign up.",
+                        " Sign up.",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                         ),
