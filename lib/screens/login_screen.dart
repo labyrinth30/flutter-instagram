@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_instagram/resources/auth_methods.dart';
 import 'package:flutter_instagram/utils/colors.dart';
+import 'package:flutter_instagram/utils/utils.dart';
 import 'package:flutter_instagram/widgets/text_field_input.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -13,6 +15,23 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String result = await AuthMethods().logInUser(
+        email: _emailController.text, password: _passwordController.text);
+    if (result == 'success') {
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      // show snackbar
+      showSnackBar(context, result);
+    }
+  }
 
   @override
   void dispose() {
@@ -70,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 // Button for Login
                 InkWell(
+                  onTap: loginUser,
                   child: Container(
                     width: double.infinity,
                     alignment: Alignment.center,
@@ -84,7 +104,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    child: const Text('Log in'),
+                    child: _isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: primaryColor,
+                            ),
+                          )
+                        : const Text('Log in'),
                   ),
                 ),
                 const SizedBox(
@@ -105,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text("Don't have an account?"),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: loginUser,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                           vertical: 8,
