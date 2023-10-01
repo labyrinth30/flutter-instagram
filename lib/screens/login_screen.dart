@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_instagram/resources/auth_methods.dart';
+import 'package:flutter_instagram/responsive/responsive_layout_screen.dart';
+import 'package:flutter_instagram/screens/mobile_screen_layout.dart';
+import 'package:flutter_instagram/screens/singup_screen.dart';
+import 'package:flutter_instagram/screens/web_screen_layout.dart';
 import 'package:flutter_instagram/utils/colors.dart';
 import 'package:flutter_instagram/utils/utils.dart';
 import 'package:flutter_instagram/widgets/text_field_input.dart';
@@ -17,6 +21,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
 
+  void navigateToSignUp() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SignupScreen(),
+      ),
+    );
+  }
+
   void loginUser() async {
     setState(() {
       _isLoading = true;
@@ -24,12 +36,18 @@ class _LoginScreenState extends State<LoginScreen> {
     String result = await AuthMethods().logInUser(
         email: _emailController.text, password: _passwordController.text);
     if (result == 'success') {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout()),
+        ),
+      );
     } else {
       setState(() {
         _isLoading = false;
       });
       // show snackbar
-      showSnackBar(context, result);
     }
   }
 
@@ -131,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text("Don't have an account?"),
                     ),
                     GestureDetector(
-                      onTap: loginUser,
+                      onTap: navigateToSignUp,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                           vertical: 8,
