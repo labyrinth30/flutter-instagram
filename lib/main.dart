@@ -8,6 +8,7 @@ import 'package:flutter_instagram/screens/login_screen.dart';
 import 'package:flutter_instagram/screens/mobile_screen_layout.dart';
 import 'package:flutter_instagram/screens/singup_screen.dart';
 import 'package:flutter_instagram/screens/web_screen_layout.dart';
+import 'package:flutter_instagram/secrets.dart';
 // import 'package:flutter_instagram/screens/singup_screen.dart';
 // import 'package:flutter_instagram/screens/mobile_screen_layout.dart';
 // import 'package:flutter_instagram/screens/web_screen_layout.dart';
@@ -18,11 +19,11 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
-        apiKey: "AIzaSyDCwyc4K5mUMZl7Q_GnP473Y3dFmKRPXXI",
-        appId: "1:15653772181:web:5afee694db648f0bb0f49c",
-        messagingSenderId: "15653772181",
-        projectId: "instagram-clone-96430",
-        storageBucket: "instagram-clone-96430.appspot.com",
+        apiKey: apiKey,
+        appId: appId,
+        messagingSenderId: messagingSenderId,
+        projectId: projectId,
+        storageBucket: storageBucket,
       ),
     );
   } else {
